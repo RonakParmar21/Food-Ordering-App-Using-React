@@ -378,3 +378,87 @@ filter button
     padding: 8px 16px;
   }
 }
+
+/* ===========================
+   SHIMMER (Skeleton Loader)
+   =========================== */
+
+.shimmer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.shimmer-cards {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #e6e6e6 25%,
+    #f2f2f2 37%,
+    #e6e6e6 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+.shimmer-img {
+  height: 160px;
+}
+
+.shimmer-content {
+  padding: 12px 14px;
+}
+
+.shimmer-title {
+  height: 18px;
+  width: 70%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.shimmer-text {
+  height: 14px;
+  width: 90%;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.shimmer-meta {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shimmer-badge {
+  height: 18px;
+  width: 60px;
+  border-radius: 6px;
+}
+
+.shimmer-time {
+  height: 14px;
+  width: 50px;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .shimmer-img {
+    height: 140px;
+  }
+}
+
