@@ -1,10 +1,26 @@
-import { useState } from "react";
 import FoodCard from "./FoodCard";
-import resObj from "../utils/mockData";
+import resObj from "../utils/mockData"; // not required because I fetch live swiggy data.
+
+import { useState, useEffect } from "react";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
+  const [listOfRestaurants, setListOfRestraunt] = useState([]);
 
-  const [noOfRestaurant, setNoOfRestaurant] = useState(resObj)
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+  const fetchData = async () => {
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.296");
+
+    const jsonData = await data.json();
+    setListOfRestraunt(jsonData?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  };
+
+  if(listOfRestaurants.length == 0) {
+    return <Shimmer />;
+  }
 
   return (
     <>
@@ -22,7 +38,7 @@ const Body = () => {
         </button>
       </div>
       <div className="rest-container">
-        {noOfRestaurant.map((res) => (
+        {listOfRestaurants.map((res) => (
           <FoodCard key={res.info.id} resData={res} />
         ))}
       </div>
