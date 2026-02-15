@@ -1,12 +1,12 @@
 import FoodCard from "./FoodCard";
-import resObj from "../utils/mockData"; // not required because I fetch live swiggy data.
 
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestraunt] = useState([]);
-  const [filteredResturants, setFilteredResturants] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -14,26 +14,26 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
+    // const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.2961468&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const data = await fetch(
-      "https://corsproxy.io/?url=https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.296",
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.296",
     );
 
     const jsonData = await data.json();
+
     setListOfRestraunt(
       jsonData?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
-    setFilteredResturants(
+    setFilteredRestaurant(
       jsonData?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
   };
 
-  if (listOfRestaurants.length === 0) {
-    return <Shimmer />;
-  }
-
-  return (
+  return listOfRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search">
         <input
@@ -50,7 +50,7 @@ const Body = () => {
             const filteredRestaurant = listOfRestaurants.filter((res) =>
               res?.info?.name?.toLowerCase().includes(searchText.toLowerCase()),
             );
-            setFilteredResturants(filteredRestaurant);
+            setFilteredRestaurant(filteredRestaurant);
           }}
         >
           Search
@@ -70,8 +70,10 @@ const Body = () => {
         </button>
       </div>
       <div className="rest-container">
-        {filteredResturants.map((res) => (
-          <FoodCard key={res.info.id} resData={res} />
+        {filteredRestaurant.map((res) => (
+          <Link key={res.info.id} to={"/restaurantmenu/" + res.info.id}>
+            <FoodCard resData={res} />
+          </Link>
         ))}
       </div>
     </>
