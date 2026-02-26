@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -8,6 +8,7 @@ import Error from "./components/Error.jsx";
 import About from "./components/About.jsx";
 import RestaurantMenu from "./components/RestaurantMenu.jsx";
 import Body from "./components/Body.jsx";
+import Grocery from "./components/Grocery.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/grocery",
+        element: <Suspense fallback={<h1>Loading..</h1>}><Grocery /></Suspense>,
       },
       {
         path: "/restaurantmenu/:resId",

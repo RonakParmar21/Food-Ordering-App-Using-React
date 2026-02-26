@@ -20,6 +20,7 @@ const Header = () => {
           <li>{onlineStatus ? "✅" : "🚫"}</li>
           <li><Link to={"/"}>Home</Link></li>
           <li><Link to="/about">About Us</Link></li>
+          <li><Link to="/grocery">Grocery</Link></li>
           <li>Contact Us</li>
           <li>Cart</li>
           <li className="cart" onClick={() => {
