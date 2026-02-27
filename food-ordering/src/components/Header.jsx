@@ -7,28 +7,50 @@ const Header = () => {
   const [nameBtn, setNameBtn] = useState("Login");
   const onlineStatus = useOnlineStatus();
   return (
-    <header className="header">
-      <div className="logo-container">
+    <header className="flex">
+      <div className="w-40">
         <img
           src={LOGO_URL}
           alt="Logo"
         />
       </div>
 
-      <nav className="nav-container">
-        <ul className="nav-list">
+      <nav className="">
+        <ul className="">
           <li>{onlineStatus ? "✅" : "🚫"}</li>
           <li><Link to={"/"}>Home</Link></li>
           <li><Link to="/about">About Us</Link></li>
           <li><Link to="/grocery">Grocery</Link></li>
           <li>Contact Us</li>
           <li>Cart</li>
-          <li className="cart" onClick={() => {
+          <li className="" onClick={() => {
             nameBtn === "Login" ? setNameBtn("Logout") : setNameBtn("Login");
           }}>{nameBtn}</li>
         </ul>
       </nav>
     </header>
+    // <header className="header">
+    //   <div className="logo-container">
+    //     <img
+    //       src={LOGO_URL}
+    //       alt="Logo"
+    //     />
+    //   </div>
+
+    //   <nav className="nav-container">
+    //     <ul className="nav-list">
+    //       <li>{onlineStatus ? "✅" : "🚫"}</li>
+    //       <li><Link to={"/"}>Home</Link></li>
+    //       <li><Link to="/about">About Us</Link></li>
+    //       <li><Link to="/grocery">Grocery</Link></li>
+    //       <li>Contact Us</li>
+    //       <li>Cart</li>
+    //       <li className="cart" onClick={() => {
+    //         nameBtn === "Login" ? setNameBtn("Logout") : setNameBtn("Login");
+    //       }}>{nameBtn}</li>
+    //     </ul>
+    //   </nav>
+    // </header>
   );
 };
 
