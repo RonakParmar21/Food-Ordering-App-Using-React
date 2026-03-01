@@ -1,15 +1,20 @@
 import FoodCard from "./FoodCard";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { withVegLabel, withNonVegLabel } from "./FoodCard";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestraunt] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const FoodCardVeg = withVegLabel(FoodCard);
+  const FoodCardNonVeg = withNonVegLabel(FoodCard);
 
   useEffect(() => {
     fetchData();
@@ -18,7 +23,7 @@ const Body = () => {
   const fetchData = async () => {
     // const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.2961468&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.296"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.296",
     );
 
     const jsonData = await data.json();
@@ -34,16 +39,17 @@ const Body = () => {
   };
 
   const onlineStatus = useOnlineStatus();
-  if(onlineStatus === false)
-    return (
-      <h1>You are offline.</h1>
-    );
+  if (onlineStatus === false) return <h1>You are offline.</h1>;
 
   // if(listOfRestaurants?.length === 0) {
   //   return <Shimmer />
   // }
 
-  return listOfRestaurants?.length === 0 ? (<Shimmer /> ) : (
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
+  return listOfRestaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search">
         <input
@@ -79,10 +85,24 @@ const Body = () => {
           Top Rated Restaurants
         </button>
       </div>
+      <div className="search">
+        <label htmlFor="">User Name : </label>
+        <input
+        className="border border-black p-2"
+          value={loggedInUser}
+          onChange={(e) => {
+            setUserName(e.target.value);
+          }}
+        /></div>
       <div className="rest-container">
-        {filteredRestaurant.map((res) => (
+        {/* {filteredRestaurant && filteredRestaurant.map((res) => ( */}
+        {filteredRestaurant?.map((res) => (
           <Link key={res.info.id} to={"/restaurantmenu/" + res.info.id}>
-            <FoodCard resData={res} />
+            {res.info.veg ? (
+              <FoodCardVeg resData={res} />
+            ) : (
+              <FoodCard resData={res} />
+            )}
           </Link>
         ))}
       </div>

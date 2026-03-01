@@ -25,4 +25,30 @@ const FoodCard = (props) => {
   );
 };
 
+// higher order component
+
+// input - restaurantcard  ==> Restaurant card veg
+
+export const withVegLabel = (FoodCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-3 p-3 rounded-lg">Veg</label>
+        <FoodCard {...props} />
+      </div>
+    );
+  };
+};
+
+export const withNonVegLabel = (FoodCard) => {
+  return(props) => {
+    return (
+      <div>
+        <label>Non Veg</label>
+        <FoodCard {...props} />
+      </div>
+    )
+  }
+}
+
 export default FoodCard;
