@@ -1,8 +1,19 @@
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 import { CDN_URL } from "../utils/constants"
 
 const FoodCard = (props) => {
   const { resData } = props;
   const { name, cuisines, avgRating } = resData?.info;
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (resData) => {
+    // dispatch an action to add item to cart
+    dispatch(addItem(resData));
+  }
+  
+
   return (
     <div className="food-card">
       <img
@@ -19,6 +30,9 @@ const FoodCard = (props) => {
         <div className="food-meta">
           <span>⭐ {avgRating}</span>
           <span>⏱ {resData.info.sla.deliveryTime} min</span>
+        </div>
+        <div>
+          <button className="border border-2 p-1 m-2" onClick={() => handleAddItem(resData)}>Add + </button>
         </div>
       </div>
     </div>

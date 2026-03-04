@@ -88,12 +88,19 @@ const Body = () => {
       <div className="search">
         <label htmlFor="">User Name : </label>
         <input
-        className="border border-black p-2"
+          className="border border-black p-2"
           value={loggedInUser}
           onChange={(e) => {
             setUserName(e.target.value);
           }}
-        /></div>
+        />
+      </div>
+      <div className="rest-container">
+        {
+          filteredRestaurant?.map((res) => <FoodCard key={res.info.id} resData={res} />)
+        }
+      </div>
+      <h1>Not consider</h1>
       <div className="rest-container">
         {/* {filteredRestaurant && filteredRestaurant.map((res) => ( */}
         {filteredRestaurant?.map((res) => (

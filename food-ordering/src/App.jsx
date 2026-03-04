@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 import { lazy, useEffect, useState } from "react";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 // make site in smaller part
 // chunking
@@ -31,6 +33,7 @@ function App() {
   }, []);
 
   return (
+    <Provider store={appStore}>
     <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
       <div>
         <Header />
@@ -38,6 +41,7 @@ function App() {
         <Footer />
       </div>
     </UserContext.Provider>
+    </Provider>
   );
 }
 
